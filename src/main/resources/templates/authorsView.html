@@ -1,0 +1,33 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!-- add in  the thymeleaf namespace so under the  HTML tag-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring Framework Guru</title>
+</head>
+<body>
+<h1>Author List</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Fist Name</th>
+        <th>Last Name</th>
+    </tr>
+    <!--we're setting up an iterator saying for each book and the property of books(attribute name of BookController under the "/books" mapping) on the model ,
+    go through the replace the text, The 123 text with the property of ID, -->
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.id}">123</td>
+        <td th:text="${author.firstName}"> Bimsara</td>
+        <td th:text="${author.lastName}">Jayatilake</td>
+    </tr>
+</table>
+</body>
+</html>
