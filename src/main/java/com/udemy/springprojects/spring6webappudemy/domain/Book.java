@@ -29,6 +29,21 @@ public class Book {
     inverseJoinColumns = @JoinColumn(name="author_id")//Specify the foreign Key column for the Author entity
     )
     private Set<Author> authors=new HashSet<>();
+    //Book has a one publisher
+    //then we indicate the mapping we consider the overall relationship. book(many)->publisher(one)
+
+    //owning side-Publisher & Book relationship
+    @ManyToOne
+    @JoinColumn(name="publisher_ID",referencedColumnName="id")
+    private  Publisher publisher;
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public Publisher getPublisher(){
+        return publisher;
+    }
 
     public Set<Author> getAuthors(){
         return authors;

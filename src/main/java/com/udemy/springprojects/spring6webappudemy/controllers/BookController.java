@@ -3,6 +3,7 @@ package com.udemy.springprojects.spring6webappudemy.controllers;
 import com.udemy.springprojects.spring6webappudemy.services.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -26,11 +27,11 @@ public class BookController {
     /*What's happening here is when Spring calls, this method will pass in the model
     that will be an implementation of model*/
 
-    @RequestMapping("/books")
+    @RequestMapping ("/books")
     public String getBooks(Model model){
      model.addAttribute("books",bookService.findAll());
      //View for the Request Mapping//tell Spring boot to look for a view called books.
-     return "books";
+     return "bookList";
     }
 
 }
