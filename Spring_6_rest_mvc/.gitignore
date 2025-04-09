@@ -1,0 +1,28 @@
+#Intellij IDEA project files
+/.idea/
+
+#Maven dependies
+/.mvn/
+/mvnw
+/mvnw.cmd
+
+# Target directory
+/target/
+/out/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Avoid External Libraries
+/lib/
+/libs/
+
+# Avoid HELP.md
+HELP.md
+
+# Compiled class files
+*.class
+
+
+
