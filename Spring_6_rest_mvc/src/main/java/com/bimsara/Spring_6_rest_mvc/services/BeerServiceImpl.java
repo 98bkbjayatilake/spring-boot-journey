@@ -4,6 +4,7 @@ import com.bimsara.Spring_6_rest_mvc.model.Beer;
 import com.bimsara.Spring_6_rest_mvc.model.BeerStyle;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -69,5 +70,69 @@ public class BeerServiceImpl implements BeerService {
 
      return beerMap.get(id);
    }
+
+    public Beer saveNewBeer(Beer beer){
+     Beer savedBeer=Beer.builder()
+             .id(UUID.randomUUID())
+             .version(beer.getVersion())
+             .beerName(beer.getBeerName())
+             .beerStyle(beer.getBeerStyle())
+             .upc(beer.getUpc())
+             .quantityOnHand(beer.getQuantityOnHand())
+             .price(beer.getPrice())
+             .createdDate(LocalDateTime.now())
+             .updateDate(LocalDateTime.now())
+             .build();
+
+     beerMap.put(beer.getId(),savedBeer);
+
+     return savedBeer;
+    }
+
+    @Override
+    public void updateBeerById(UUID beerId, Beer beer) {
+        Beer existing=beerMap.get(beerId);
+        //set the properties of existing with passing the new properties of request body
+        existing.setBeerName(beer.getBeerName());
+        existing.setPrice(beer.getPrice());
+        existing.setUpc(beer.getUpc());
+        existing.setQuantityOnHand(beer.getQuantityOnHand());
+
+        beerMap.put(existing.getId(),existing);
+    }
+
+    @Override
+    public void deleteById(UUID beerId) {
+        beerMap.remove(beerId);
+    }
+
+    public   void patchBeerById(UUID beerId, Beer beer){
+        Beer existing=beerMap.get(beerId);
+
+        //check if the new Beer name is not null or  empty, they update it
+        if(StringUtils.hasText(beer.getBeerName())){
+            existing.setBeerName(beer.getBeerName());
+        }
+
+        //check if the new beer style is not null,then update it
+        if(beer.getBeerStyle()!=null){
+            existing.setBeerStyle(beer.getBeerStyle());
+        }
+
+        //check if the new price is not null,then update it
+        if(beer.getPrice()!=null){
+            existing.setPrice(beer.getPrice());
+        }
+
+        // Check if the new quantity on hand is not null, then update it
+        if (beer.getQuantityOnHand() != null) {
+            existing.setQuantityOnHand(beer.getQuantityOnHand());
+        }
+
+        // Check if the new UPC is not null or empty, then update it
+        if (StringUtils.hasText(beer.getUpc())) {
+            existing.setUpc(beer.getUpc());
+        }
+    }
 }
 

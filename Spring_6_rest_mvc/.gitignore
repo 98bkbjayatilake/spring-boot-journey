@@ -1,5 +1,5 @@
 #Intellij IDEA project files
-/.idea/
+.idea/
 
 #Maven dependies
 /.mvn/
