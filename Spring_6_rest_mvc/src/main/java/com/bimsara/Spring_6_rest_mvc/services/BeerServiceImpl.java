@@ -64,11 +64,11 @@ public class BeerServiceImpl implements BeerService {
         return new ArrayList<>(beerMap.values());
     }
     @Override
-   public Beer getBeerById(UUID id){
+   public Optional<Beer> getBeerById(UUID id){
 
      log.debug("Get Beer Id in service was called");
 
-     return beerMap.get(id);
+     return Optional.of(beerMap.get(id));
    }
 
     public Beer saveNewBeer(Beer beer){

@@ -30,7 +30,7 @@ public class CustomerController {
             @PathVariable("customerId") UUID Id
             )
     {
-        return customerService.getCustomerById(Id);
+        return customerService.getCustomerById(Id).orElseThrow(NotFoundException::new);
     }
 
     //POST is a create request

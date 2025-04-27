@@ -17,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -164,6 +165,17 @@ class BeerControllerTest {
                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                .andExpect(jsonPath("$.length()", is(3)));
     }
+
+    @Test
+    void getBeerByIdNotFound() throws Exception {
+        //Mock behavior:when beerService.getBeerById() is called with ANY  UUID,
+        //it will throw a NotFoundException
+        given(beerService.getBeerById(any(UUID.class))).willReturn(Optional.empty());
+
+        // Perform a GET request to BeerController.BEER_PATH_ID with a random UUID.
+        mockMvc.perform(get(BeerController.BEER_PATH_ID,UUID.randomUUID()))
+                .andExpect(status().isNotFound());
+    }
     @Test
     void getBeerById() throws Exception {
         //just grab the first one that's being initialized
@@ -171,7 +183,7 @@ class BeerControllerTest {
 
         //Define the expected behaviour of the mocked bookService.
         //when the getBeerById() is called with the testBeer ID, return testBeer
-        given(beerService.getBeerById(testBeer.getId())).willReturn(testBeer);
+        given(beerService.getBeerById(testBeer.getId())).willReturn(Optional.of(testBeer));
 
         //Simulate a GET request to the endpoint "/api/v1/beer/{id}"
         mockMvc.perform(get(BeerController.BEER_PATH_ID, testBeer.getId())

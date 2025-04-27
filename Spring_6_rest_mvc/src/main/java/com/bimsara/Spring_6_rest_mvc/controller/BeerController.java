@@ -58,8 +58,8 @@ public class BeerController {
 
         //just logging message
         log.debug("Get Beer by Id-in controller");
-
-        return beerService.getBeerById(beerId);
+        //If the optional does not have a value and the controller has a logic to throw the not found exception to trigger the 404 error
+        return beerService.getBeerById(beerId).orElseThrow(NotFoundException::new);
     }
 
     //POST is a create request
@@ -89,6 +89,19 @@ public class BeerController {
         beerService.deleteById(beerId);
         return  new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+    /*
+    * @ExceptionHandler(NotFoundException.class) tells Spring Boot: "If any NotFoundException is thrown inside this controller
+     , run this method instead of crashing"
+    *only work for methods of BeerController */
+    /*
+     * You manually build a 404 response using ResponseEntity.notFound().build(); */
+    /*
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity handleNotFoundException(){
+        System.out.println("In exception handler");
+        return  ResponseEntity.notFound().build();
+    }*/
 
     @PatchMapping(BEER_PATH_ID)
     public ResponseEntity updateByPatchId(@PathVariable("beerId") UUID beerId, @RequestBody Beer beer)
