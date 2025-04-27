@@ -15,15 +15,17 @@ import java.util.UUID;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("api/v1/customer")
 public class CustomerController {
 
+    public static final String CUSTOMER_PATH="/api/v1/customer";
+    public static final String CUSTOMER_PATH_ID=CUSTOMER_PATH+ "/{customerId}";
+
     private final CustomerService customerService;
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping(value =CUSTOMER_PATH )
     public List<Customer> listCustomers(){
         return customerService.listCustomers();
     }
-    @RequestMapping(value = "{customerId}",method = RequestMethod.GET)
+    @GetMapping(value = CUSTOMER_PATH_ID)
     public Customer getCustomerById(
             @PathVariable("customerId") UUID Id
             )
@@ -32,7 +34,7 @@ public class CustomerController {
     }
 
     //POST is a create request
-   @PostMapping
+   @PostMapping(value =CUSTOMER_PATH )
     public ResponseEntity handlePost(@RequestBody  Customer newCustomer){
         Customer savedCustomer=customerService.saveNewCustomer(newCustomer);
         HttpHeaders customerHeader=new HttpHeaders();
@@ -40,7 +42,7 @@ public class CustomerController {
         return  new ResponseEntity<>(savedCustomer,customerHeader, HttpStatus.CREATED);
    }
 
-   @PutMapping("{customerId}")
+   @PutMapping(value = CUSTOMER_PATH_ID)
    public ResponseEntity updateCustomerById(
            @PathVariable("customerId") UUID customerId,
            @RequestBody Customer updatedCustomer
@@ -49,13 +51,13 @@ public class CustomerController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
    }
 
-   @DeleteMapping("{customerId}")
+   @DeleteMapping(value = CUSTOMER_PATH_ID)
    public  ResponseEntity deleteById(@PathVariable("customerId") UUID Id){
         customerService.deleteById(Id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
    }
 
-    @PatchMapping("{customerId}")
+    @PatchMapping(value = CUSTOMER_PATH_ID)
     public ResponseEntity updateByPatchId(@PathVariable("customerId") UUID Id, @RequestBody Customer patchCustomer)
     {
         customerService.patchCustomerById(Id,patchCustomer);

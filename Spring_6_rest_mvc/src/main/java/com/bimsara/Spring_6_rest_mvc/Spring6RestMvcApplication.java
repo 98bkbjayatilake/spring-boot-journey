@@ -6,20 +6,20 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
-
-@SpringBootApplication(scanBasePackages = "com.bimsara.Spring_6_rest_mvc")
-public class Spring6RestMvcApplication implements CommandLineRunner {
-
+@SpringBootApplication
+//@SpringBootApplication(scanBasePackages = "com.bimsara.Spring_6_rest_mvc")
+public class Spring6RestMvcApplication  {
+/*
 	@Autowired
 	private BeerController beerController;
 	@Autowired
 	private CustomerController customerController;
-
+*/
 	public static void main(String[] args) {
 		SpringApplication.run(Spring6RestMvcApplication.class, args);
 
 	}
-
+/*
 	@Override
 	public void run(String... args) throws Exception {
 		// This will invoke ListBeers method from BeerController
@@ -29,4 +29,6 @@ public class Spring6RestMvcApplication implements CommandLineRunner {
 		customerController.listCustomers();
 
 	}
+
+ */
 }
